@@ -10,6 +10,7 @@ class Extractor():
         self.config = yaml.safe_load(open(os.path.join("config", "config.yaml")))
         self.client = "JUMBO"
         self.line_items = []
+        self.folder_results = "extracted_info"
 
         if self.client == "JUMBO":
             self.line_items = ["DESCRIPTION"]
@@ -23,6 +24,12 @@ class Extractor():
             else:
                 extracted_info[field] = re.findall(pattern, text)
         return extracted_info
+
+    def json_response(self, json_file, file_name) -> None:
+        json_object = json.dumps(json_file)
+        file_path = os.path.join(self.folder_results, file_name)
+        with open(file_path, "w") as outfile:
+            outfile.write(json_object)        
 
 if __name__ == "__main__":
 
@@ -38,7 +45,8 @@ if __name__ == "__main__":
         receipt_json = json.load(f)
         text = receipt_json["pages"][0]["textAnnotations"][0]["description"]
         extracted_info = extractor.apply_regexs(fields_n_patterns, text)
-        print(extracted_info)
+        json_file_name = ocr_json[ocr_json.index("/")+1:-5]+ "_result_.json"
+        extractor.json_response(extracted_info, json_file_name)
 
 
 
