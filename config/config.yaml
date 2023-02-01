@@ -5,6 +5,8 @@ JUMBO:
     AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=VENDEDOR ELECTRO|TEL\:)
   INVOICE_NUMBER:
     TIQUETE\s(?P<capture>[\w\s]+)\n
+  NUMBER_OF_ITEMS:
+    ITEMS\sCOMPRADOS\:\s(?P<capture>\d+)
   SUBTOTAL:
     (?P<capture>empty value)
   TOTAL:
@@ -16,4 +18,4 @@ JUMBO:
   TOTAL_PER_ITEM:
     (empty value)
   TAX_CODE:
-    (empty value)
+    (?<=\n)\d+\s?([ANF]|\n)(?=\d|\n|SUBTOTAL)

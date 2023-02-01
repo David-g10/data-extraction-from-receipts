@@ -26,14 +26,16 @@ class Extractor():
                     extracted_info[field] = value
             else:
                 extracted_info[field] = re.findall(pattern, text)
+                if len(extracted_info[field]) != int(extracted_info["TOTAL_ITEMS"]):
+                    extracted_info[field].clear()
         return extracted_info
 
     def json_response(self, json_file, file_name) -> None:
         json_object = json.dumps(json_file)
         file_path = os.path.join(self.folder_results, file_name)
         with open(file_path, "w") as outfile:
-            outfile.write(json_object)        
-
+            outfile.write(json_object)
+   
 if __name__ == "__main__":
 
     extractor = Extractor()
