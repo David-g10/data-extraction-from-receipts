@@ -41,12 +41,17 @@ if __name__ == "__main__":
     fields_n_patterns = Extractor().config[client]
 
     for ocr_json in ocr_jsons:
-        f = open(ocr_json)
-        receipt_json = json.load(f)
-        text = receipt_json["pages"][0]["textAnnotations"][0]["description"]
-        extracted_info = extractor.apply_regexs(fields_n_patterns, text)
-        json_file_name = ocr_json[ocr_json.index("/")+1:-5]+ "_result_.json"
-        extractor.json_response(extracted_info, json_file_name)
+        try:
+            f = open(ocr_json)
+            receipt_json = json.load(f)
+            text = receipt_json["pages"][0]["textAnnotations"][0]["description"]
+            extracted_info = extractor.apply_regexs(fields_n_patterns, text)
+            json_file_name = ocr_json[ocr_json.index("/")+1:-5]+ "_result_.json"
+            extractor.json_response(extracted_info, json_file_name)
+        except Exception as e:
+            print(f"Could not perform the extraction of information for that text, due to: {e} in file {ocr_json}")
+
+
 
 
 
