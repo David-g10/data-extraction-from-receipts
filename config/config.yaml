@@ -1,6 +1,7 @@
-DATE:
-  (?<!//)(?P<capture>(?:\d{2}\/){2}\d{4})(?!\\nVIGENCIA)
-STORE_ADDRESS:
-  AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=VENDEDOR ELECTRO|TEL\:)
-DESCRIPTION:
-  \d{13}\s(.{1,16}?)\n
+JUMBO:
+  DATE:
+    (?<!//)(?P<capture>(?:\d{2}\/){2}\d{4})(?!\\nVIGENCIA)
+  STORE_ADDRESS:
+    AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=VENDEDOR ELECTRO|TEL\:)
+  DESCRIPTION:
+    \d{13}\s(.{1,16}?)\n
