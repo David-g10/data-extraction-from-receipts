@@ -3,5 +3,17 @@ JUMBO:
     (?<!//)(?P<capture>(?:\d{2}\/){2}\d{4})(?!\\nVIGENCIA)
   STORE_ADDRESS:
     AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=VENDEDOR ELECTRO|TEL\:)
+  INVOICE_NUMBER:
+    TIQUETE\s(?P<capture>[\w\s]+)\n
+  SUBTOTAL:
+    (?P<capture>empty value)
+  TOTAL:
+    \nTOTAL\n(?P<capture>\d+)
+  SKU:
+    (\d{13})\s.{1,16}?\n
   DESCRIPTION:
     \d{13}\s(.{1,16}?)\n
+  TOTAL_PER_ITEM:
+    (empty value)
+  TAX_CODE:
+    (empty value)

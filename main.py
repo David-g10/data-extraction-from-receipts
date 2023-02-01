@@ -20,7 +20,10 @@ class Extractor():
         
         for field,pattern in fields_n_patterns.items():
             if field not in self.line_items:
-                extracted_info[field] = re.search(pattern, text, re.S)["capture"]
+                extracted_info[field] = ''
+                value = re.search(pattern, text, re.S)["capture"]
+                if value:
+                    extracted_info[field] = value
             else:
                 extracted_info[field] = re.findall(pattern, text)
         return extracted_info
