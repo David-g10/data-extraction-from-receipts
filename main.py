@@ -13,7 +13,7 @@ class Extractor():
         self.folder_results = "extracted_info"
 
         if self.client == "JUMBO":
-            self.line_items = ["DESCRIPTION"]
+            self.line_items = ["DESCRIPTION", "SKU", "TOTAL_PER_ITEM", "TAX_CODE"]
     
     def apply_regexs(self, fields_n_patterns, text) -> dict:
         extracted_info = {}
@@ -21,12 +21,12 @@ class Extractor():
         for field,pattern in fields_n_patterns.items():
             if field not in self.line_items:
                 extracted_info[field] = ''
-                value = re.search(pattern, text, re.S)["capture"]
-                if value:
+                if re.search(pattern, text, re.S):
+                    value = re.search(pattern, text, re.S)["capture"]
                     extracted_info[field] = value
             else:
                 extracted_info[field] = re.findall(pattern, text)
-                if len(extracted_info[field]) != int(extracted_info["TOTAL_ITEMS"]):
+                if len(extracted_info[field]) != int(extracted_info["NUMBER_OF_ITEMS"]):
                     extracted_info[field].clear()
         return extracted_info
 
