@@ -1,10 +1,10 @@
 JUMBO:
   DATE:
-    (?<!//)(?P<capture>(?:\d{2}\/){2}\d{4})(?!\\nVIGENCIA)
+    (?<!\/)(?P<capture>(?:\d{2}\/){2}\d{4})(?!\nVIGENCIA)
   STORE_ADDRESS:
-    AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=VENDEDOR ELECTRO|TEL\:)
+    AGENTE RETENEDOR DE IVA.+?\n(?P<capture>.+?)(?=\n|VENDEDOR ELECTRO|TEL\:)
   INVOICE_NUMBER:
-    TIQUETE\s(?P<capture>[\w\s]+)\n
+    TIQUETE\s(?P<capture>[\w ]+)
   NUMBER_OF_ITEMS:
     ITEMS\sCOMPRADOS\:\s(?P<capture>\d+)
   SUBTOTAL:
