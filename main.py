@@ -26,10 +26,15 @@ class Extractor():
                     extracted_info[field] = value
             else:
                 extracted_info[field] = re.findall(pattern, text)
-                if len(extracted_info[field]) != int(extracted_info["NUMBER_OF_ITEMS"]):
-                    extracted_info[field].clear()
         return extracted_info
 
+    def check_lists_dimentions(self, extracted_info_dict) -> dict:
+        number_of_items = int(extracted_info_dict["NUMBER_OF_ITEMS"])
+        for field in extracted_info_dict.keys():
+            if (type(extracted_info_dict[field]) is list) and (len(extracted_info_dict[field]) != number_of_items):
+                extracted_info_dict[field].clear()
+        return extracted_info_dict       
+        
     def json_response(self, json_file, file_name) -> None:
         json_object = json.dumps(json_file)
         file_path = os.path.join(self.folder_results, file_name)
@@ -51,6 +56,7 @@ if __name__ == "__main__":
             receipt_json = json.load(f)
             text = receipt_json["pages"][0]["textAnnotations"][0]["description"]
             extracted_info = extractor.apply_regexs(fields_n_patterns, text)
+            extracted_info = extractor.check_lists_dimentions(extracted_info)
             json_file_name = ocr_json[ocr_json.index("/")+1:-5]+ "_result_.json"
             extractor.json_response(extracted_info, json_file_name)
         except Exception as e:
